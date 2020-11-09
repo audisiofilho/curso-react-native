@@ -5,9 +5,12 @@ import Header from './components/Header'
 function App() {
   return (
     <>
-     <Header/>
-     <Header/>
-     <Header/>
+     <Header title="react">
+       <ul>
+         <li>Componetização</li>
+         <li>Propriedades</li>
+       </ul>
+     </Header>
     </>
   );
 }
