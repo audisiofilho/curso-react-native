@@ -1,10 +1,17 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Header from './components/Header'
+import api from './services/api'
 
 
 function App() {
 
-  const [projects, setProjetcs] = useState(["Facebook", "Uber"])
+  const [projects, setProjetcs] = useState([])
+
+  useEffect(() => {
+    api.get('projeto').then(response => {
+      setProjetcs(response.data)
+    })
+  },[])
 
   function HandleAddProject(){
         setProjetcs([...projects, `Projeto Criado em: ${Date.now()}`])
@@ -12,11 +19,11 @@ function App() {
   
   return (
     <>
-     <Header title="react">
+     <Header title="React">
        <ul>
          {projects.map(project => (
-           <li key={project}>
-             {project}
+           <li key={project.id}>
+             {project.dev}
            </li>
          ))}
        </ul>
