@@ -3,7 +3,7 @@ import Header from './components/Header'
 import api from './services/api'
 
 
-function App() {
+ function App() {
 
   const [projects, setProjetcs] = useState([])
 
@@ -11,10 +11,17 @@ function App() {
     api.get('projeto').then(response => {
       setProjetcs(response.data)
     })
-  },[])
+  }, [])
 
-  function HandleAddProject(){
-        setProjetcs([...projects, `Projeto Criado em: ${Date.now()}`])
+  async function HandleAddProject(){
+        //setProjetcs([...projects, `Projeto Criado em: ${Date.now()}`])
+       const response = await api.post('projeto', {
+          title: `Projeto Estático: ${Date.now()}`,
+          dev: "Samuel"
+        })
+
+        const projeto = response.data
+        setProjetcs([...projects, projeto])
   }
   
   return (
@@ -23,7 +30,7 @@ function App() {
        <ul>
          {projects.map(project => (
            <li key={project.id}>
-             {project.dev}
+             {project.title}
            </li>
          ))}
        </ul>

@@ -1,4 +1,3 @@
-const { response, request, json } = require("express")
 const express = require("express") //importamos
 const cors = require("cors")//importamos
 const app = express() //atribuimos as funçõs a variavel
@@ -30,7 +29,7 @@ app.post('/projeto', (request, response) => {
     projetos.push(projeto)
 
 
-    return response.json(projetos)
+    return response.json(projeto)
 })
 
 app.put('/projeto/:id', (request, response) =>{
