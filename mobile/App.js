@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, FlatList } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity } from 'react-native';
 import api from './src/service/api';
 
 export default function App() {
@@ -11,7 +11,17 @@ export default function App() {
        console.log(response.data)
        setProjects(response.data)
      })
-   }, [])
+   }, []);
+
+   async function handleAddProject(){
+     const response = await api.post('projeto', {
+       title: `New ${Date.now()}`,
+       dev: 'Dev Teste'
+     })
+
+     const project = response.data
+     setProjects([...projects, project])
+   }
 
 
   return (
@@ -31,6 +41,12 @@ export default function App() {
           {project.title}
         </Text>)} 
       />
+
+      <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={handleAddProject}>
+        <Text style={styles.buttonText}>
+          Adicionar Projeto
+        </Text>
+      </TouchableOpacity>
 
       {/*<View style={styles.projects}>
         <Text style={styles.titleProjects}>Projetos:</Text>
@@ -79,5 +95,21 @@ const styles = StyleSheet.create({
   project:{
     color: '#fff',
     fontSize: 20,
+    
+  },
+  button:{
+    backgroundColor: '#FF8C00',
+    alignSelf: "stretch",
+    margin: 20,
+    height: 50,
+    borderRadius: 6,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 40
+  },
+  buttonText:{
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: "bold"
   }
 });
